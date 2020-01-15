@@ -40,16 +40,17 @@ final case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 
 final case class Leaf[A](value: A) extends Tree[A]
 
+object AnotherTree {
 
-implicit val treeFunctor: Functor[Tree] =
-  new Functor[Tree] {
-    override def map[A, B](fa: Tree[A])(f: A => B): Tree[B] =
-      fa match {
-        case Branch(left, right) => Branch(map(left)(f), map(right)(f))
-        case Leaf(v) => Leaf(f(v))
-      }
-  }
-
+  implicit val treeFunctor: Functor[Tree] =
+    new Functor[Tree] {
+      override def map[A, B](fa: Tree[A])(f: A => B): Tree[B] =
+        fa match {
+          case Branch(left, right) => Branch(map(left)(f), map(right)(f))
+          case Leaf(v) => Leaf(f(v))
+        }
+    }
+}
 
 /**
  * as-is we cannot create a branch with two leaves because the invariance problem:
@@ -68,7 +69,12 @@ object Tree {
 
   def leaf[A](value: A): Tree[A] =
     Leaf(value)
+
+
 }
 
-val t: Tree[Int] = Tree.branch(Tree.leaf(3), Tree.leaf(5)).map(_ * 2)
-// res11: wrapper.Tree[Int] = Branch(Leaf(20),Leaf(40))
+object TreeTry{
+  // res11: wrapper.Tree[Int] = Branch(Leaf(20),Leaf(40))
+  //please make it compile
+  //val t: Tree[Int] = Tree.branch(Tree.leaf(3), Tree.leaf(5)).map(_ * 2)
+}
