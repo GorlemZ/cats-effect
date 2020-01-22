@@ -24,10 +24,10 @@ object FactorialWriterExercise extends App {
    *  call in parallel we cannot distinguish between the computations:
    */
 
-  Await.result(Future.sequence(Vector(
-    Future(factorial1(3)),
-    Future(factorial1(3))
-  )), 5.seconds)
+  // Await.result(Future.sequence(Vector(
+  //   Future(factorial1(3)),
+  //   Future(factorial1(3))
+  // )), 5.seconds)
 
   type Logged[A] = Writer[Vector[String], A]
 
@@ -60,5 +60,8 @@ object FactorialWriterExercise extends App {
       Future(factorial(3).run),
       Future(factorial(5).run)
     )), 5.seconds)
+
+  println(logA + " ---> " + ansA)
+  println(logB + " ---> " + ansB)
 }
 
